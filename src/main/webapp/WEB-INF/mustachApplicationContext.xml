@@ -6,7 +6,7 @@
         <constructor-arg value="/WEB-INF/mustache/"/>
     </bean>
     <bean id="mustache-suffix" class="java.lang.String">
-        <constructor-arg value="/WEB-INF/mustache/"/>
+        <constructor-arg value=".mustache"/>
     </bean>
 
     <bean id="defaultMustacheFactory" class="com.github.mustachejava.DefaultMustacheFactory"/>

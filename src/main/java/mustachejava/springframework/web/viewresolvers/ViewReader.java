@@ -35,14 +35,14 @@ public class ViewReader implements ResourceLoaderAware {
         this.resourceLoader = resourceLoader;
     }
 
-    private String getPrefix(String fileName) {
+    String getPrefix(String fileName) {
         if (!fileName.startsWith(prefix)) {
             fileName = prefix + fileName;
         }
         return fileName;
     }
 
-    private String getSuffix(String fileName) {
+    String getSuffix(String fileName) {
         if (!fileName.endsWith(suffix)) {
             fileName = fileName + suffix;
         }
