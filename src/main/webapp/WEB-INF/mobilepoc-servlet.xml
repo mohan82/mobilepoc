@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="/hello.html" class="mobilepoc.controller.HelloController"/>
+    <bean id="mustacheViewResolver" class="org.springframework.web.servlet.view.mustache.MustacheViewResolver">
+        <property name="cache" value="false"/>
+        <property name="prefix" value="/WEB-INF/mustache/"/>
+        <property name="suffix" value=".mustache"/>
+        <property name="templateLoader">
+            <bean class="org.springframework.web.servlet.view.mustache.MustacheTemplateLoader"/>
+        </property>
+        <property name="defaultMustacheFactory" ref="defaultMustacheFactory"/>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+
+
+    <bean id="defaultMustacheFactory" class="com.github.mustachejava.DefaultMustacheFactory"/>
+
+</beans>
