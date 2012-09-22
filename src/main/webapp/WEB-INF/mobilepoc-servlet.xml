@@ -2,16 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="mustachApplicationContext.xml"/>
 
     <bean name="/hello.html" class="mobilepoc.controller.HelloController"/>
-    <bean id="mustacheViewResolver" class="org.springframework.web.servlet.view.mustache.MustacheViewResolver">
+    <!--- Choose Mustach View Resolver first then JSP -->
+    <bean id="mustacheViewResolver" class="mustachejava.springframework.web.viewresolvers.MustacheViewResolver">
+        <constructor-arg ref="defaultMustacheFactory"/>
+        <constructor-arg ref="viewReader"/>
         <property name="cache" value="false"/>
-        <property name="prefix" value="/WEB-INF/mustache/"/>
-        <property name="suffix" value=".mustache"/>
-        <property name="templateLoader">
-            <bean class="org.springframework.web.servlet.view.mustache.MustacheTemplateLoader"/>
-        </property>
-        <property name="defaultMustacheFactory" ref="defaultMustacheFactory"/>
+        <property name="prefix" ref="mustache-prefix"/>
+        <property name="suffix" ref="mustache-suffix"/>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -19,9 +19,4 @@
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-
-
-
-    <bean id="defaultMustacheFactory" class="com.github.mustachejava.DefaultMustacheFactory"/>
-
 </beans>
