@@ -1,13 +1,12 @@
 package mustachejava.springframework.web.viewresolvers;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.MustacheException;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,16 +15,16 @@ import java.io.Reader;
  * Time: 6:16 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ViewReader implements ResourceLoaderAware {
+public class SpringTemplateMustacheFactory extends DefaultMustacheFactory implements ResourceLoaderAware {
 
     private ResourceLoader resourceLoader;
     private String prefix;
     private String suffix;
 
-    public ViewReader() {
+    public SpringTemplateMustacheFactory() {
     }
 
-    public  ViewReader(String prefix, String suffix) {
+    public SpringTemplateMustacheFactory(String prefix, String suffix) {
         this.suffix = suffix;
         this.prefix = prefix;
     }
@@ -49,13 +48,28 @@ public class ViewReader implements ResourceLoaderAware {
         return fileName;
     }
 
-    protected Reader getReader(String fileName) throws Exception {
+    public boolean doesMustacheResourceExist(String fileName) {
         String appendedFileName = getSuffix(getPrefix(fileName));
         Resource resource = resourceLoader.getResource(appendedFileName);
-        if (resource.exists()) {
-            return new BufferedReader(new InputStreamReader(resource.getInputStream()));
-        }
-        throw new FileNotFoundException(appendedFileName);
+        if (resource.exists())
+            return true;
+        else
+            return false;
+
     }
 
+    @Override
+    public Reader getReader(String fileName) {
+        String appendedFileName = getSuffix(getPrefix(fileName));
+        Resource resource = resourceLoader.getResource(appendedFileName);
+        try {
+            if (resource.exists()) {
+                return new BufferedReader(new InputStreamReader(resource.getInputStream()));
+            }
+        } catch (IOException e) {
+            throw new MustacheException("Failed to load template: "
+                    + fileName, e);
+        }
+        throw new MustacheException("No template exists named: " + fileName);
+    }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="yahooRestClient" class="mobilepoc.client.yahoo.YahooClientHelper" scope="prototype">
+        <property name="dailyWebResource" ref="dailyWebResource"/>
+    </bean>
+    <bean id="dailyWebResource" class="com.sun.jersey.api.client.WebResource" factory-bean="jerseyClient"
+          factory-method="resource">
+        <constructor-arg>
+            <value>http://download.finance.yahoo.com/d/quotes.csv</value>
+        </constructor-arg>
+    </bean>
+    <bean id="jerseyClient" class="com.sun.jersey.api.client.Client" factory-method="create"/>
+    <bean id="yahooPriceService" class="mobilepoc.client.yahoo.YahooRestPriceService" scope="prototype">
+        <property name="yahooRestClient" ref="yahooRestClient"/>
+    </bean>
+    <bean id="stockService" class="mobilepoc.service.StockServiceImpl" scope="prototype">
+        <constructor-arg ref="yahooPriceService"/>
+    </bean>
+</beans>

@@ -1,4 +1,3 @@
-
 package mustachejava.springframework.web.viewresolvers;
 
 import java.io.Writer;
@@ -21,6 +20,7 @@ public class MustacheView extends AbstractTemplateView {
     public void setMustache(Mustache mustache) {
         this.mustache = mustache;
     }
+
 
     @Override
     protected void renderMergedTemplateModel(Map model, HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -3,20 +3,30 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <import resource="mustachApplicationContext.xml"/>
+    <import resource="applicationContextService.xml"/>
 
     <bean name="/hello.html" class="mobilepoc.controller.HelloController"/>
-    <!--- Choose Mustach View Resolver first then JSP -->
-    <bean id="mustacheViewResolver" class="mustachejava.springframework.web.viewresolvers.MustacheViewResolver">
-        <constructor-arg ref="defaultMustacheFactory"/>
-        <constructor-arg ref="viewReader"/>
-        <property name="cache" value="false"/>
-        <property name="prefix" ref="mustache-prefix"/>
-        <property name="suffix" ref="mustache-suffix"/>
+    <bean name="/stock.html" class="mobilepoc.controller.StockController">
+        <property name="validator">
+            <bean class="mobilepoc.controller.StockValidator"/>
+        </property>
+        <property name="stockService"  ref="stockService"/>
     </bean>
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!--- Choose Mustach View Resolver first then JSP -->
+    <bean id="mustacheViewResolver" class="mustachejava.springframework.web.viewresolvers.MustacheViewResolver">
+        <constructor-arg ref="springTemplateMustacheFactory"/>
+        <property name="cache" value="true"/>
+        <property name="prefix" ref="mustache-prefix"/>
+        <property name="suffix" ref="mustache-suffix"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="order" value="0"/>
+    </bean>
+
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
+        <property name="order" value="1"/>
     </bean>
 </beans>

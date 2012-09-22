@@ -1,0 +1,28 @@
+<html>
+{{>shared/header}}
+
+<body>
+<h2>Spring's form tags example</h2>
+
+<form method="POST">
+    <table>
+    {{#stockParam.errorList}}
+        <tr>
+            <td class="error">
+                {{.}}
+            </td>
+        </tr>
+        {{/stockParam.errorList}}
+        <tr>
+            <td>Symbol :</td>
+            <td><input name="symbol" value="{{stockParam.symbol}}"/></td>
+        </tr>
+        <tr>
+        <td>
+            <input type="submit" />
+         <td/>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

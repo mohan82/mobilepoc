@@ -17,23 +17,25 @@ package mustachejava.springframework.web.viewresolvers;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
+
+import java.io.Reader;
 
 
 /**
  * @author Mohan Ambalavanan
  */
-public class MustacheViewResolver extends AbstractTemplateViewResolver implements ViewResolver {
+public class MustacheViewResolver extends AbstractTemplateViewResolver implements ViewResolver, ServletContextAware, InitializingBean {
 
-    private DefaultMustacheFactory defaultMustacheFactory;
-    private ViewReader viewReader;
+    private SpringTemplateMustacheFactory springTemplateMustacheFactory;
 
-    public MustacheViewResolver(DefaultMustacheFactory defaultMustacheFactory, ViewReader viewReader) {
+    public MustacheViewResolver(SpringTemplateMustacheFactory springTemplateMustacheFactory) {
         this();
-        this.defaultMustacheFactory = defaultMustacheFactory;
-        this.viewReader = viewReader;
+        this.springTemplateMustacheFactory = springTemplateMustacheFactory;
     }
 
     public MustacheViewResolver() {
@@ -43,14 +45,28 @@ public class MustacheViewResolver extends AbstractTemplateViewResolver implement
     @Override
     protected Class<?> requiredViewClass() {
         return MustacheView.class;
+
     }
+
 
     @Override
     protected AbstractUrlBasedView buildView(String viewName) throws Exception {
 
         final MustacheView view = (MustacheView) super.buildView(viewName);
-        Mustache mustache = defaultMustacheFactory.compile(viewReader.getReader(view.getUrl()), viewName);
-        view.setMustache(mustache);
-        return view;
+        String fileName = view.getUrl();
+        if (springTemplateMustacheFactory.doesMustacheResourceExist(fileName)) {
+            Reader reader = springTemplateMustacheFactory.getReader(fileName);
+            Mustache mustache = springTemplateMustacheFactory.compile(reader, viewName);
+            view.setMustache(mustache);
+            return view;
+        } else {
+            //let other resolvers take care if we cant resolve it.
+            return null;
+        }
+    }
+
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
     }
 }

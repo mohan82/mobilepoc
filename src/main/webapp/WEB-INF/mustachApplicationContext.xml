@@ -8,10 +8,7 @@
     <bean id="mustache-suffix" class="java.lang.String">
         <constructor-arg value=".mustache"/>
     </bean>
-
-    <bean id="defaultMustacheFactory" class="com.github.mustachejava.DefaultMustacheFactory"/>
-
-    <bean id="viewReader" class="mustachejava.springframework.web.viewresolvers.ViewReader">
+    <bean id="springTemplateMustacheFactory" class="mustachejava.springframework.web.viewresolvers.SpringTemplateMustacheFactory">
         <constructor-arg ref="mustache-prefix"/>
         <constructor-arg ref="mustache-suffix"/>
     </bean>
