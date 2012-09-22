@@ -2,7 +2,7 @@
 <html>
 {{>shared/header}}
 <body>
-{{#data}}
+{{#stock-data}}
     <h3>Symbol:{{symbol}}</h3>
     <ul>
     <li>Date:{{barData.transDate}}</li>
@@ -11,6 +11,6 @@
     <li>Low:{{barData.low}}</li>
     <li>Volume:{{barData.volume}}</li>
     </ul>
-{{/data}}
+{{/stock-data}}
 </body>
 </html>

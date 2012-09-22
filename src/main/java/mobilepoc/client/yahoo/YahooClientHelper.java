@@ -4,6 +4,7 @@
  */
 package mobilepoc.client.yahoo;
 
+import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 import org.slf4j.Logger;
@@ -23,14 +24,13 @@ import static mobilepoc.client.yahoo.DailyPriceParamEnum.*;
  */
 public class YahooClientHelper {
 
-    private WebResource dailyWebResource;
     private Logger logger = LoggerFactory.getLogger(YahooClientHelper.class);
 
+    private String dailyResourceUrl;
 
-    public void setDailyWebResource(WebResource dailyWebResource) {
-        this.dailyWebResource = dailyWebResource;
+    public void setDailyResourceUrl(String dailyResourceUrl) {
+        this.dailyResourceUrl = dailyResourceUrl;
     }
-
 
     public List<String[]> getDailyQuotes(List<String> symbolList, List<String> fields) {
         try {
@@ -47,6 +47,8 @@ public class YahooClientHelper {
         MultivaluedMap<String, String> params = new MultivaluedMapImpl();
         params.add(DLY_SYMBOL.getParameter(), RestUtil.getListAsCSV(symbolList));
         params.add(DLY_FIELD.getParameter(), RestUtil.getListAsString(fields));
+        Client c = Client.create();
+        WebResource dailyWebResource = c.resource(dailyResourceUrl);
         dailyWebResource = dailyWebResource.queryParams(params);
         logger.info("Downloading daily quote for URL :" + dailyWebResource.toString());
         byte[] response = dailyWebResource.accept(MediaType.APPLICATION_OCTET_STREAM_TYPE).get(byte[].class);

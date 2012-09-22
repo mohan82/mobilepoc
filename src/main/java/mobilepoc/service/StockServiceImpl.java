@@ -26,7 +26,7 @@ public class StockServiceImpl implements StockService {
         byte[] bytes = yahooRestPriceService.getStockQuotesAsByteArray(Collections.singletonList(symbol), DailyPriceYahooFieldsEnum.getEnumsFieldsAsList());
         Parser<DailyYahooPriceData> parser = new Parser<DailyYahooPriceData>();
         parser.setFileDelimeter(",");
-        parser.setHasHeader(true);
+        parser.setHasHeader(false);
         parser.setFileRowMapper(new DailyYahooPriceRowMapper());
         return parser.processByteArray(bytes);
     }

@@ -3,15 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="yahooRestClient" class="mobilepoc.client.yahoo.YahooClientHelper" scope="prototype">
-        <property name="dailyWebResource" ref="dailyWebResource"/>
-    </bean>
-    <bean id="dailyWebResource" class="com.sun.jersey.api.client.WebResource" factory-bean="jerseyClient"
-          factory-method="resource">
-        <constructor-arg>
+        <property name="dailyResourceUrl">
             <value>http://download.finance.yahoo.com/d/quotes.csv</value>
-        </constructor-arg>
+        </property>
     </bean>
-    <bean id="jerseyClient" class="com.sun.jersey.api.client.Client" factory-method="create"/>
+
+    <bean id="jerseyClient" class="com.sun.jersey.api.client.Client" factory-method="create" scope="prototype"/>
     <bean id="yahooPriceService" class="mobilepoc.client.yahoo.YahooRestPriceService" scope="prototype">
         <property name="yahooRestClient" ref="yahooRestClient"/>
     </bean>
