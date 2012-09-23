@@ -1,1 +1,6 @@
-This file was created by IntelliJ IDEA 11.1.3 for binding GitHub repository
+It is a Simple Spring MVC 2.5 /Mustache Proof of Concept Stock Market Application.
+TODO:
+Will add Spring Handler Interceptor Mobile detection and render mutiple views and also allow the ability to switch like Spring Mobile
+
+
+<h3>Demo can be found <a href ="http://creativemohan.com/mobilepoc/stock.html">here</a></h3>
