@@ -2,5 +2,3 @@ It is a Simple Spring MVC 2.5 /Mustache Proof of Concept Stock Market Applicatio
 TODO:
 Will add Spring Handler Interceptor Mobile detection and render mutiple views and also allow the ability to switch like Spring Mobile
 
-
-<h3>Demo can be found <a href ="http://creativemohan.com/mobilepoc/stock.html">here</a></h3>
