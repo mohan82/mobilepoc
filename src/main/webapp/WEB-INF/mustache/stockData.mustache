@@ -1,16 +1,22 @@
 <!DOCTYPE html>
+
 <html>
-{{>shared/header}}
-<body>
-{{#stock-data}}
-    <h3>Symbol:{{symbol}}</h3>
-    <ul>
-    <li>Date:{{barData.transDate}}</li>
-    <li>Open:{{barData.open}}</li>
-    <li>High:{{barData.high}}</li>
-    <li>Low:{{barData.low}}</li>
-    <li>Volume:{{barData.volume}}</li>
-    </ul>
-{{/stock-data}}
+{{>shared/templates/header}}
+
+<body class="well">
+<div id="wrap">
+    {{>shared/function/hero}}
+    <div id="main" class="container-fluid">
+        <div class="row-fluid">
+            <div id="main-container" class="span8">
+                {{>shared/function/symbolResult}}
+            </div>
+        </div>
+        <div class="span2">
+            {{>shared/templates/blank}}
+        </div>
+    </div>
+</div>
 </body>
+{{>shared/templates/footer}}
 </html>

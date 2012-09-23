@@ -1,0 +1,12 @@
+<form id="SearchSymbol" class="form-search pull-right" method="POST">
+    <label class="control-label" for="SearchSymbol">
+        Symbol :
+    </label>
+    <input name="symbol" type="text" value="{{stockParam.symbol}}"/>
+    <button type="submit" class="btn">Get Price</button>
+</form>
+{{#stockParam.errorList}}
+    <span class="label-warning">
+        {{.}}
+    </span>
+{{/stockParam.errorList}}

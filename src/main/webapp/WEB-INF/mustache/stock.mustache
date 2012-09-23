@@ -1,28 +1,19 @@
 <html>
-{{>shared/header}}
+{{>shared/templates/header}}
 
-<body>
-<h2>Spring's form tags example</h2>
-
-<form method="POST">
-    <table>
-    {{#stockParam.errorList}}
-        <tr>
-            <td class="error">
-                {{.}}
-            </td>
-        </tr>
-        {{/stockParam.errorList}}
-        <tr>
-            <td>Symbol :</td>
-            <td><input name="symbol" value="{{stockParam.symbol}}"/></td>
-        </tr>
-        <tr>
-        <td>
-            <input type="submit" />
-         <td/>
-        </tr>
-    </table>
-</form>
+<body class="well">
+<div id="wrap" >
+    {{>shared/function/hero}}
+    <div id="main" class="container-fluid">
+        <div class="row-fluid">
+            <div id="main-container" class="span8">
+                {{>shared/function/searchSymbol}}
+            </div>
+        </div>
+        <div class="span2">
+            {{>shared/templates/blank}}
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,12 @@
+
+body {
+    background: url(../img/wood.jpg);
+}
+.padding-down {
+    padding-bottom: 5%;
+}
+#main-container {
+    padding: 2%;
+    margin: 2%;
+    background: white;
+}
